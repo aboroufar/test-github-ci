@@ -47,7 +47,6 @@ testpaths = ["tests"]
 package = true
 default-groups = [
     "dev",
-    "wrappers",
 ]
 
 
