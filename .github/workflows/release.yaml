@@ -1,6 +1,13 @@
+name: Tag and Release
+
+on:
+  push:
+    branches: [ main ]
+
 jobs:
     deploy:
       runs-on: ubuntu-latest
+      permissions: write-all
       steps:
       - uses: actions/checkout@v4
         with:
