@@ -29,13 +29,6 @@ dev = [
 
 ]
 
-wrappers = [
-    "chandra",
-    "plannet-client",
-    "sauron-client",
-    "horizon-client",
-]
-
 [project.optional-dependencies]
 dev = [
     "tox-uv",
