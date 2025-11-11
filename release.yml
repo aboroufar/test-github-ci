@@ -1,0 +1,45 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
+
+name: Tag and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # necessary for tagging.
+    permissions: write-all
+
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: Semver Conventional Commits
+      id: versioning
+      uses: ietf-tools/semver-action@v1
+      with:
+        token: ${{ github.token }}
+        skipInvalidTags: true
+
+    - name: show versioning
+      run: |
+        echo ${{ steps.versioning.outputs.next }}
+        echo ${{ steps.versioning.outputs.nextStrict }}
+
+    - name: create release
+      uses: comnoco/create-release-action@v2.0.5
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        tag_name: ${{ steps.versioning.outputs.next }}
+        release_name: ${{ steps.versioning.outputs.next }}
+        prerelease: false
