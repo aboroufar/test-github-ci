@@ -23,20 +23,23 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Get Next Version
-      id: semver
+    - name: Semver Conventional Commits
+      id: versioning
       uses: ietf-tools/semver-action@v1
       with:
-          token: ${{ github.token }}
-          branch: main
+        token: ${{ github.token }}
+        skipInvalidTags: true
 
-    - name: Create Release
-      uses: ncipollo/release-action@v1.20.0
+    - name: show versioning
+      run: |
+        echo ${{ steps.versioning.outputs.next }}
+        echo ${{ steps.versioning.outputs.nextStrict }}
+
+    - name: create release
+      uses: comnoco/create-release-action@v2.0.5
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
       with:
-       allowUpdates: true
-       draft: false
-       makeLatest: true
-       name: ${{ steps.semver.outputs.next }}
-       body: Changelog Contents
-       token: ${{ github.token }}
-       
+        tag_name: ${{ steps.versioning.outputs.next }}
+        release_name: ${{ steps.versioning.outputs.next }}
+        prerelease: false
