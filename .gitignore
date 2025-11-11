@@ -1,0 +1,68 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*/__pycache__
+
+# Logs and outputs
+logs/
+output/**
+outputs
+input/**
+
+# local configs
+local_config
+
+# OS and editor files
+.DS_Store
+*/**.DS_Store
+.idea/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+.installed.cfg
+*.egg
+MANIFEST
+.python-version
+tmp/**
+!*/.gitkeep
+site/
+
+# Internal libraries conf
+*config.local.yaml
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+/o365_token.txt
+*.csv

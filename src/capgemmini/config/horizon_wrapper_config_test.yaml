@@ -1,0 +1,10 @@
+defaults:
+  - _self_
+  - horizon_client_settings: dev_client
+
+hydra:
+  run:
+    dir: ./output/logs/${hydra.job.name}/${now:%Y-%m-%d_%H-%M-%S}
+
+  job_logging:
+    logger: logger

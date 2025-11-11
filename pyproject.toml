@@ -1,0 +1,102 @@
+# see documentation, e.g.
+# - https://packaging.python.org/en/latest/specifications/declaring-project-metadata/#declaring-project-metadata
+# - https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+# - https://www.python.org/dev/peps/pep-0621/
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "capgemmini"
+version = "0.1.0"
+authors = [
+    { name = "amir bf", email = "amir@sky.com" },
+]
+requires-python = ">=3.12,<3.15"
+readme = "README.md"
+license = {file = "LICENSE"}
+description = ""
+
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "tox-uv",
+    "pre-commit",
+
+]
+
+wrappers = [
+    "chandra",
+    "plannet-client",
+    "sauron-client",
+    "horizon-client",
+]
+
+[project.optional-dependencies]
+dev = [
+    "tox-uv",
+
+]
+
+[project.urls]
+Repository = "https://sky.git.com/apesss/capgemmini"
+Issues = "https://sky.git.com/apesss/capgemmini/issues"
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv]
+package = true
+default-groups = [
+    "dev",
+    "wrappers",
+]
+
+[tool.uv.sources]
+chandra = { git = "ssh://gitlab@git.bskyb.com/plannet-users-team/chandra.git", branch = "main" }
+plannet-client = { git = "ssh://gitlab@git.bskyb.com/plannet-users-team/plannet-client.git", branch = "main" }
+sauron-client = { git = "ssh://gitlab@git.bskyb.com/plannet-users-team/sauron-client.git", branch = "main" }
+horizon-client = { git = "ssh://gitlab@git.bskyb.com/plannet-users-team/horizon-client.git", branch = "main" }
+
+
+[tool.tox]
+skipsdist = true
+# envs to runs automatically with tox -p
+env_list = ["pre-commit", "tests"]
+
+
+[tool.tox.env_run_base]
+# Pass all environment variables to the test environments
+passenv = ["*"]
+
+
+[tool.tox.env.pre-commit]
+description = "Run pre-commit on all files"
+commands = [
+    [
+        "pre-commit",
+        "run",
+        "--all-files",
+        "--show-diff-on-failure",
+        { replace = "posargs", default = [
+        ], extend = true },
+    ],
+]
+
+[tool.tox.env.tests]
+description = "Run unit test and coverage report"
+commands = [
+    [
+        "pytest",
+        "--cov",
+        "--cov-append",
+        "--cov-report=term-missing",
+        "--cov-report=xml:report.xml",
+         { replace = "posargs", default = [], extend = true }
+    ],
+]

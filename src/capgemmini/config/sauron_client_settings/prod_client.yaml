@@ -1,0 +1,16 @@
+defaults:
+  - /default_settings/default_client@_here_
+
+resource_limit:
+  max_connections: 10
+  max_keepalive_connections: 5
+  keepalive_expiry: 5
+retry:
+  max_retries: 3
+  min: 1
+  multiplier: 2
+  max: 10
+max_redirects: 5
+environment:
+  host: "https://sauron.cf.paas.bskyb.com"
+  token_env_var: "PROD_SAURON_ACCESS_TOKEN"

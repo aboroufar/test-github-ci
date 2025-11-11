@@ -1,0 +1,50 @@
+services:
+  wrapster_project:
+    container_name: ${CONTAINER_NAME}
+    env_file:
+      - ".env"
+    build:
+      args:
+        - ROOT_PROJ_DIR=${ROOT_PROJ_DIR:-/app}
+      context: .
+      dockerfile: Dockerfile
+      secrets:
+        - ssh_private_key
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./output:${ROOT_PROJ_DIR:-/app}/input
+      - ./input:${ROOT_PROJ_DIR:-/app}/output
+      - ./src:${ROOT_PROJ_DIR:-/app}/src
+    secrets:
+      - ssh_private_key
+    depends_on:
+      - redis
+
+  redis:
+    container_name: ${CONTAINER_NAME}_redis
+    image: redis:latest
+    restart: always
+    ports:
+      - ${REDIS_PORT:-6379}:6379
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - redis-cache:/data
+    networks:
+      - transmission
+
+secrets:
+  ssh_private_key:
+    file: ~/.ssh/id_ed25519
+
+volumes:
+  redis-cache:
+    driver: local
+
+networks:
+  transmission:
+    name: ${NETWORK_NAME-:transmission_network}
