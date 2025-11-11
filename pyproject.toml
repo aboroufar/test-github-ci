@@ -57,12 +57,6 @@ default-groups = [
     "wrappers",
 ]
 
-[tool.uv.sources]
-chandra = { git = "ssh://gitlab@git.bskyb.com/plannet-users-team/chandra.git", branch = "main" }
-plannet-client = { git = "ssh://gitlab@git.bskyb.com/plannet-users-team/plannet-client.git", branch = "main" }
-sauron-client = { git = "ssh://gitlab@git.bskyb.com/plannet-users-team/sauron-client.git", branch = "main" }
-horizon-client = { git = "ssh://gitlab@git.bskyb.com/plannet-users-team/horizon-client.git", branch = "main" }
-
 
 [tool.tox]
 skipsdist = true
